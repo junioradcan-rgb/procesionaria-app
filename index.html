@@ -470,7 +470,18 @@ selectedLng = lng;
 openModal();
 
 setTimeout(() => {
-  document.querySelector('#modal input').value = "Ubicación automática (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
+   fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+  .then(res => res.json())
+  .then(data => {
+    let lugar = data.address.city || data.address.town || data.address.village || "Zona desconocida";
+
+    document.querySelector('#modal input').value =
+      lugar + " (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
+  })
+  .catch(() => {
+    document.querySelector('#modal input').value =
+      "Ubicación automática (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
+  });
 }, 100);
     },
     () => {
