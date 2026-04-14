@@ -316,10 +316,35 @@ function initMap(){
   window.rIcon=L.divIcon({html:'<div style="background:#c0392b;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>',iconSize:[13,13],iconAnchor:[6,6],className:''});
   const bIcon=L.divIcon({html:'<div style="background:#2980b9;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>',iconSize:[13,13],iconAnchor:[6,6],className:''});
   window.map.on('click',function(e){
-    selectedLat=e.latlng.lat; selectedLng=e.latlng.lng;
-    if(tempMarker) window.map.removeLayer(tempMarker);
-    tempMarker=L.marker([selectedLat,selectedLng],{icon:window.rIcon}).addTo(window.map).bindPopup("📍 Ubicación seleccionada").openPopup();
-  });
+  selectedLat = e.latlng.lat;
+  selectedLng = e.latlng.lng;
+
+  if(tempMarker) window.map.removeLayer(tempMarker);
+
+  tempMarker = L.marker([selectedLat,selectedLng],{icon:window.rIcon})
+    .addTo(window.map)
+    .bindPopup("📍 Ubicación seleccionada")
+    .openPopup();
+
+  // 👉 abrir modal automáticamente
+  openModal();
+
+  // 👉 rellenar ubicación automática
+  setTimeout(() => {
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${selectedLat}&lon=${selectedLng}&format=json`)
+      .then(res => res.json())
+      .then(data => {
+        let lugar = data.address.city || data.address.town || data.address.village || "Zona desconocida";
+
+        document.querySelector('#modal input').value =
+          lugar + " (" + selectedLat.toFixed(5) + ", " + selectedLng.toFixed(5) + ")";
+      })
+      .catch(() => {
+        document.querySelector('#modal input').value =
+          "Ubicación seleccionada (" + selectedLat.toFixed(5) + ", " + selectedLng.toFixed(5) + ")";
+      });
+  }, 100);
+});
   vets.forEach(v=>L.marker([v.lat,v.lng],{icon:bIcon}).addTo(window.map).bindPopup(`🏥 <b>${v.name}</b><br><small>${v.addr}</small>`));
   loadAvistamientos();
 }
@@ -379,7 +404,13 @@ console.log("DATA REAL:", data);
   }catch(err){console.error("Error:",err);}
 }
 
-function openModal(){document.getElementById('modal').classList.add('open')}
+function openModal(){
+  if(!selectedLat || !selectedLng){
+    alert("Primero toca el mapa o usa tu ubicación");
+    return;
+  }
+  document.getElementById('modal').classList.add('open');
+}
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 
 async function submitReport(){
