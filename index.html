@@ -373,7 +373,22 @@ function initMap(){
       });
   }, 100);
 });
-  vets.forEach(v=>L.marker([v.lat,v.lng],{icon:bIcon}).addTo(window.map).bindPopup(`🏥 <b>${v.name}</b><br><small>${v.addr}</small>`));
+  vets.forEach(v=>L.marker([v.lat,v.lng],{icon:bIcon}).addTo(window.map).bindPopup(`
+  <div style="font-size:13px">
+    🏥 <b>${v.name}</b><br>
+    <small>${v.addr}</small><br><br>
+
+    <a href="tel:${v.phone}" 
+       style="display:block;margin-bottom:6px;color:#c0392b;text-decoration:none;">
+       📞 Llamar
+    </a>
+
+    <a href="${v.maps}" target="_blank" 
+       style="display:block;color:#3498db;text-decoration:none;">
+       🧭 Cómo llegar
+    </a>
+  </div>
+`)
   loadAvistamientos();
 }
 
