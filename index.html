@@ -392,5 +392,10 @@ async function submitReport(){
   }catch(err){alert("Error al guardar el avistamiento");console.error(err);}
 }
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
 </body>
 </html>
