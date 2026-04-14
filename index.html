@@ -355,6 +355,15 @@ async function loadAvistamientos(){
     const res=await fetch(SUPA_URL+"/rest/v1/avistamientos?select=*",{headers:HEADERS});
     if(!res.ok){console.error("Error HTTP:",res.status);return;}
     const data=await res.json();
+    if(userLat && userLng){
+  data.forEach(a => {
+    if(a.lat && a.lng){
+      a.distance = getDistance(userLat, userLng, parseFloat(a.lat), parseFloat(a.lng));
+    }
+  });
+
+  data.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
+}
 console.log("DATA REAL:", data);
     markersLayer.clearLayers();
     data.forEach(a=>{
