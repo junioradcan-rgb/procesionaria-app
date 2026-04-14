@@ -449,6 +449,8 @@ async function submitReport(){
   const ubicacion=document.querySelector('#modal input').value;
   const riesgo=document.querySelector('#modal select').value;
   const descripcion=document.querySelector('#modal textarea').value;
+  const fileInput = document.getElementById('foto');
+const file = fileInput.files[0];
   console.log("DATOS QUE SE ENVÍAN:", { 
   ubicacion, 
   descripcion, 
