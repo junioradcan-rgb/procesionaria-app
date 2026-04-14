@@ -406,6 +406,7 @@ console.log("DATA REAL:", data);
         <div class="avist-icon">🌲</div>
         <div class="avist-info">
           <h4>${a.Ubicacion || "Ubicación desconocida"}</h4>
+          ${a.distance ? `<p style="color:#888;font-size:11px">📍 A ${a.distance.toFixed(1)} km</p>` : ""}
 <p>${a["Descripción"] || a.Descripcion || a.descripcion || "Sin descripción"}</p>
           <span class="badge ${claseRiesgo}">${riesgoTexto}</span>
         </div>
