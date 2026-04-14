@@ -485,6 +485,7 @@ if(file){
     console.error("Error subiendo imagen");
   }
 }
+    console.log("IMAGE URL FINAL:", imageUrl);
     const res=await fetch(SUPA_URL+"/rest/v1/avistamientos",{
       method:"POST",
       headers:{
