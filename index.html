@@ -397,5 +397,33 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
 </script>
+  <div id="installBanner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;border:1px solid #c0392b;color:#fff;padding:14px 16px;border-radius:10px;z-index:9999;width:90%;max-width:360px;text-align:center;font-size:13px;">
+  📲 Para mejor experiencia, instala la app<br><br>
+  <button onclick="installApp()" style="background:#c0392b;border:none;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;cursor:pointer;">
+    Instalar
+  </button>
+</div>
+
+<script>
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBanner').style.display = 'block';
+});
+
+function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{
+      deferredPrompt = null;
+      document.getElementById('installBanner').style.display = 'none';
+    });
+  } else {
+    alert("En tu móvil: menú ⋮ → 'Añadir a pantalla de inicio'");
+  }
+}
+</script>
 </body>
 </html>
