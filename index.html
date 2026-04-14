@@ -465,6 +465,9 @@ function closeBanner(){
       .addTo(window.map)
       .bindPopup("📍 Estás aquí")
       .openPopup();
+      selectedLat = lat;
+selectedLng = lng;
+openModal();
     },
     () => {
       alert("No se pudo obtener tu ubicación");
