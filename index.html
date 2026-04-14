@@ -21,7 +21,11 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
 .nav button{flex:1;padding:11px 4px;border:none;background:none;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#555;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:3px}
 .nav button span{font-size:16px}
 .nav button.active{color:#c0392b;border-bottom-color:#c0392b}
-.section{display:none;padding:16px}
+.section{
+  display:none;
+  padding:16px;
+  padding-bottom:90px;
+}
 .section.active{display:block}
 .alerta-banner{background:#c0392b;border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
 .alerta-banner .icon{font-size:26px;flex-shrink:0}
@@ -59,7 +63,25 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;margin-top:5px;letter-spacing:.5px}
 .badge.alto{background:#3a0a0a;color:#e17055;border:1px solid #5a1a1a}
 .badge.medio{background:#2a2200;color:#f9ca24;border:1px solid #4a3a00}
-.reportar-btn{width:100%;padding:14px;background:#c0392b;color:#fff;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;cursor:pointer;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.reportar-btn{
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 420px;
+  padding: 14px;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  z-index: 1500;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
 .reportar-btn:active{background:#a93226}
 .filtros{display:flex;gap:7px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
 .filtros::-webkit-scrollbar{display:none}
