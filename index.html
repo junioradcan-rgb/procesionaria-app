@@ -356,6 +356,7 @@ async function loadAvistamientos(){
     if(!res.ok){console.error("Error HTTP:",res.status);return;}
     const data=await res.json();
     if(userLat && userLng){
+      console.log("USER LOCATION:", userLat, userLng);
   data.forEach(a => {
     if(a.lat && a.lng){
       a.distance = getDistance(userLat, userLng, parseFloat(a.lat), parseFloat(a.lng));
