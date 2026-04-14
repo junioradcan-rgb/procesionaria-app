@@ -373,22 +373,26 @@ function initMap(){
       });
   }, 100);
 });
-  vets.forEach(v=>L.marker([v.lat,v.lng],{icon:bIcon}).addTo(window.map).bindPopup(`
-  <div style="font-size:13px">
-    🏥 <b>${v.name}</b><br>
-    <small>${v.addr}</small><br><br>
+  vets.forEach(v => {
+  L.marker([v.lat, v.lng], { icon: bIcon })
+    .addTo(window.map)
+    .bindPopup(`
+      <div style="font-size:13px">
+        🏥 <b>${v.name}</b><br>
+        <small>${v.addr}</small><br><br>
 
-    <a href="tel:${v.phone}" 
-   style="display:block;margin-bottom:6px;background:#c0392b;color:#fff;padding:6px;border-radius:6px;text-align:center;text-decoration:none;">
-   📞 Llamar
-</a>
+        <a href="tel:${v.phone}" 
+          style="display:block;margin-bottom:6px;background:#c0392b;color:#fff;padding:6px;border-radius:6px;text-align:center;text-decoration:none;">
+          📞 Llamar
+        </a>
 
-<a href="${v.maps}" target="_blank" 
-   style="display:block;background:#3498db;color:#fff;padding:6px;border-radius:6px;text-align:center;text-decoration:none;">
-   🧭 Cómo llegar
-</a>
-  </div>
-`)
+        <a href="${v.maps}" target="_blank" 
+          style="display:block;background:#3498db;color:#fff;padding:6px;border-radius:6px;text-align:center;text-decoration:none;">
+          🧭 Cómo llegar
+        </a>
+      </div>
+    `);
+});
   loadAvistamientos();
 }
 
