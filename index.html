@@ -586,8 +586,16 @@ if(file){
 }
   function toggleMapFull(){
   const mapDiv = document.getElementById('map');
+  const exitBtn = document.getElementById('exitFullBtn');
 
-  mapDiv.classList.toggle('fullscreen');
+  const isFull = mapDiv.classList.toggle('fullscreen');
+
+  // 👉 mostrar u ocultar botón salir
+  if(isFull){
+    exitBtn.style.display = 'block';
+  } else {
+    exitBtn.style.display = 'none';
+  }
 
   setTimeout(() => {
     window.map.invalidateSize();
