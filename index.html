@@ -565,6 +565,15 @@ if(file){
     setTimeout(()=>t.classList.remove('show'),3000);
   }catch(err){alert("Error al guardar el avistamiento");console.error(err);}
 }
+  function toggleMapFull(){
+  const mapDiv = document.getElementById('map');
+
+  mapDiv.classList.toggle('fullscreen');
+
+  setTimeout(() => {
+    window.map.invalidateSize();
+  }, 200);
+}
 </script>
   <script>
 if ("serviceWorker" in navigator) {
