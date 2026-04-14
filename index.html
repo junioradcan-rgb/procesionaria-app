@@ -470,7 +470,7 @@ selectedLng = lng;
 openModal();
 
 setTimeout(() => {
-  document.querySelector('#modal input').value = lat.toFixed(5) + ", " + lng.toFixed(5);
+  document.querySelector('#modal input').value = "Ubicación automática (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
 }, 100);
     },
     () => {
