@@ -323,8 +323,24 @@ console.log("DATA REAL:", data);
     markersLayer.clearLayers();
     data.forEach(a=>{
       const lat=parseFloat(a.lat), lng=parseFloat(a.lng);
-      if(!isNaN(lat)&&!isNaN(lng))
-        L.marker([lat,lng],{icon:window.rIcon}).addTo(markersLayer).bindPopup(`🌲 <b>${a.Ubicacion}</b><br>${a.Riesgo}`);
+      if(!isNaN(lat)&&!isNaN(lng)){
+
+  let color = "#c0392b"; // rojo por defecto
+
+  if (a.Riesgo && a.Riesgo.toLowerCase().includes("medio")) color = "#f1c40f";
+  if (a.Riesgo && a.Riesgo.toLowerCase().includes("bajo")) color = "#bdc3c7";
+
+  const icon = L.divIcon({
+    html: `<div style="background:${color};width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>`,
+    iconSize:[13,13],
+    iconAnchor:[6,6],
+    className:''
+  });
+
+  L.marker([lat,lng],{icon})
+    .addTo(markersLayer)
+    .bindPopup(`🌲 <b>${a.Ubicacion}</b><br>${a.Riesgo}`);
+} // rojo por defecto
     });
     const container=document.getElementById('avist-container');
     container.innerHTML = data.length === 0
