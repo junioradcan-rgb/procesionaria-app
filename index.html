@@ -651,6 +651,27 @@ setTimeout(() => {
     }
   );
 }
+  function openImage(src){
+  const modal = document.getElementById('imgModal');
+  const img = document.getElementById('imgModalContent');
+  img.src = src;
+  modal.style.display = 'flex';
+}
+
+document.getElementById('imgModal').addEventListener('click', () => {
+  document.getElementById('imgModal').style.display = 'none';
+});
 </script>
+  <div id="imgModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  z-index:3000;
+  justify-content:center;
+  align-items:center;
+">
+  <img id="imgModalContent" style="max-width:90%;max-height:90%;border-radius:10px;">
+</div>
 </body>
 </html>
