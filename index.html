@@ -553,7 +553,6 @@ function closeBanner(){
       userLat = lat;
       userLng = lng;
       loadAvistamientos();
-openModal();
 
 setTimeout(() => {
    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
