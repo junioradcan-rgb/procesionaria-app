@@ -455,6 +455,31 @@ function closeBanner(){
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
+      // 👉 guardar ubicación para el reporte
+      selectedLat = lat;
+      selectedLng = lng;
+
+      window.map.setView([lat, lng], 15);
+
+      if (tempMarker) window.map.removeLayer(tempMarker);
+
+      tempMarker = L.marker([lat, lng], {
+        icon: window.rIcon
+      }).addTo(window.map)
+      .bindPopup("📍 Ubicación seleccionada automáticamente")
+      .openPopup();
+    },
+    () => {
+      alert("No se pudo obtener tu ubicación");
+    }
+  );
+}
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
       window.map.setView([lat, lng], 15);
 
       L.marker([lat, lng], {
