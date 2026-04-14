@@ -461,6 +461,30 @@ const file = fileInput.files[0];
   if(!selectedLat||!selectedLng){alert("Toca el mapa para marcar la ubicación exacta");return;}
   if(!ubicacion){alert("Escribe la ubicación");return;}
   try{
+    let imageUrl = null;
+
+if(file){
+  const fileName = Date.now() + "_" + file.name;
+
+  const uploadRes = await fetch(
+    SUPA_URL + "/storage/v1/object/avistamientos/" + fileName,
+    {
+      method: "POST",
+      headers: {
+        "apikey": SUPA_KEY,
+        "Authorization": "Bearer " + SUPA_KEY,
+        "Content-Type": file.type
+      },
+      body: file
+    }
+  );
+
+  if(uploadRes.ok){
+    imageUrl = SUPA_URL + "/storage/v1/object/public/avistamientos/" + fileName;
+  } else {
+    console.error("Error subiendo imagen");
+  }
+}
     const res=await fetch(SUPA_URL+"/rest/v1/avistamientos",{
       method:"POST",
       headers:{
