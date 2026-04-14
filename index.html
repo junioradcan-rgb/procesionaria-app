@@ -178,6 +178,9 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
 
   <div id="mapa" class="section">
     <div id="map"></div>
+    <button onclick="goToUserLocation()" style="width:100%;padding:10px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:8px;margin-bottom:10px;">
+📍 Usar mi ubicación
+</button>
     <div class="leyenda">
       <div class="leyenda-item"><div class="dot" style="background:#c0392b"></div>Avistamiento</div>
       <div class="leyenda-item"><div class="dot" style="background:#2980b9"></div>Veterinaria 24h</div>
@@ -440,6 +443,34 @@ function installApp(){
 function closeBanner(){
   document.getElementById('installBanner').style.display = 'none';
   localStorage.setItem('bannerClosed', 'true');
+}
+  function goToUserLocation() {
+  if (!navigator.geolocation) {
+    alert("Tu dispositivo no soporta geolocalización");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      window.map.setView([lat, lng], 15);
+
+      L.marker([lat, lng], {
+        icon: L.divIcon({
+          html: '<div style="background:#3498db;width:14px;height:14px;border-radius:50%;border:2px solid #fff"></div>',
+          className: ''
+        })
+      })
+      .addTo(window.map)
+      .bindPopup("📍 Estás aquí")
+      .openPopup();
+    },
+    () => {
+      alert("No se pudo obtener tu ubicación");
+    }
+  );
 }
 </script>
 </body>
