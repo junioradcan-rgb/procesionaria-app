@@ -582,7 +582,10 @@ if(file){
   }catch(err){alert("Error al guardar el avistamiento");console.error(err);}
 }
   function toggleMapFull(e){
-  if(e) e.stopPropagation();
+  if(e){
+    e.stopPropagation();
+    e.preventDefault();
+  }
 
   const mapDiv = document.getElementById('map');
   const exitBtn = document.getElementById('exitFullBtn');
@@ -593,6 +596,15 @@ if(file){
     exitBtn.style.display = 'block';
   } else {
     exitBtn.style.display = 'none';
+
+    // limpiar selección
+    selectedLat = null;
+    selectedLng = null;
+
+    if(tempMarker){
+      window.map.removeLayer(tempMarker);
+      tempMarker = null;
+    }
   }
 
   setTimeout(() => {
