@@ -692,7 +692,7 @@ function closeBanner(){
       .bindPopup("📍 Estás aquí")
       .openPopup();
 
-      selectedLat = lat;
+selectedLat = lat;
 selectedLng = lng;
 
 userLat = lat;
@@ -701,7 +701,6 @@ userLng = lng;
 loadAvistamientos();
 
 // 👉 NUEVO: abrir modal automáticamente
-openModal();
     },
     (error) => {
   if(error.code === 1){
