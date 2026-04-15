@@ -694,11 +694,15 @@ function closeBanner(){
       .openPopup();
 
       selectedLat = lat;
-      selectedLng = lng;
-      userLat = lat;
-      userLng = lng;
+selectedLng = lng;
 
-      loadAvistamientos();
+userLat = lat;
+userLng = lng;
+
+loadAvistamientos();
+
+// 👉 NUEVO: abrir modal automáticamente
+openModal();
     },
     () => {
       alert("No se pudo obtener tu ubicación");
