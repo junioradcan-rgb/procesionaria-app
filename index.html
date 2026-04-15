@@ -433,22 +433,23 @@ async function loadAvistamientos(){
     const res=await fetch(SUPA_URL+"/rest/v1/avistamientos?select=*",{headers:HEADERS});
     if(!res.ok){console.error("Error HTTP:",res.status);return;}
     const data=await res.json();
-    if(userLat && userLng){
-      console.log("USER LOCATION:", userLat, userLng);
-  data.forEach(a => {
-    if(a.lat && a.lng){
-      a.distance = getDistance(userLat, userLng, parseFloat(a.lat), parseFloat(a.lng));
-    }
-  });
+    data.forEach(a => {
+  const lat = parseFloat(a.lat);
+  const lng = parseFloat(a.lng);
 
-  data.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
-}
+  if(userLat && userLng && !isNaN(lat) && !isNaN(lng)){
+    a.distance = getDistance(userLat, userLng, lat, lng);
+  } else {
+    a.distance = 9999;
+  }
+});
+
+data.sort((a, b) => a.distance - b.distance);
 console.log("DATA REAL:", data);
     markersLayer.clearLayers();
     data.forEach(a=>{
       const lat=parseFloat(a.lat), lng=parseFloat(a.lng);
-      if(!isNaN(lat)&&!isNaN(lng)){
-
+      if(userLat && userLng && !isNaN(lat) && !isNaN(lng)){
   let color = "#c0392b"; // rojo por defecto
 
   if (a.Riesgo && a.Riesgo.toLowerCase().includes("medio")) color = "#f1c40f";
