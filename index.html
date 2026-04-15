@@ -511,8 +511,15 @@ function getDistance(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 function activateReportMode(){
+  // 👉 Si ya hay ubicación, abre directo
+  if(selectedLat && selectedLng){
+    openModal();
+    return;
+  }
+
+  // 👉 Si no hay ubicación, activar modo mapa
   reportMode = true;
-  alert("Modo reporte activado: toca el mapa para marcar la ubicación");
+  alert("Toca el mapa para marcar la ubicación");
 }
   function openModal(){
   if(!selectedLat || !selectedLng){
