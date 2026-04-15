@@ -543,7 +543,20 @@ function activateReportMode(){
   }
   document.getElementById('modal').classList.add('open');
 }
-function closeModal(){document.getElementById('modal').classList.remove('open')}
+function closeModal(){
+
+  document.getElementById('modal').classList.remove('open');
+
+  if(tempMarker){
+    window.map.removeLayer(tempMarker);
+    tempMarker = null;
+  }
+
+  selectedLat = null;
+  selectedLng = null;
+
+  reportMode = false;
+}
 
 async function submitReport(){
   const ubicacion=document.querySelector('#modal input').value;
