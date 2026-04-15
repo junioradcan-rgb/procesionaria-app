@@ -391,6 +391,7 @@ if(!reportMode){
     .openPopup();
 
   openModal();
+    reportMode = false;
 
   setTimeout(() => {
     fetch(`https://nominatim.openstreetmap.org/reverse?lat=${selectedLat}&lon=${selectedLng}&format=json`)
