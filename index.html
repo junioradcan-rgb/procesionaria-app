@@ -703,9 +703,17 @@ loadAvistamientos();
 // 👉 NUEVO: abrir modal automáticamente
 openModal();
     },
-    () => {
-      alert("No se pudo obtener tu ubicación");
-    },
+    (error) => {
+  if(error.code === 1){
+    alert("Permiso de ubicación bloqueado. Actívalo en tu navegador.");
+  } else if(error.code === 2){
+    alert("No se pudo detectar tu ubicación.");
+  } else if(error.code === 3){
+    alert("La ubicación tardó demasiado en responder.");
+  } else {
+    alert("Error desconocido al obtener ubicación.");
+  }
+},
     {
       enableHighAccuracy: false,
       timeout: 5000,
