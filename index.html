@@ -433,15 +433,29 @@ async function loadAvistamientos(){
     const res=await fetch(SUPA_URL+"/rest/v1/avistamientos?select=*",{headers:HEADERS});
     if(!res.ok){console.error("Error HTTP:",res.status);return;}
     const data=await res.json();
-    data.forEach(a => {
+    data.forEach(a=>{
   const lat = parseFloat(a.lat);
   const lng = parseFloat(a.lng);
 
-  if(userLat && userLng && !isNaN(lat) && !isNaN(lng)){
-    a.distance = getDistance(userLat, userLng, lat, lng);
-  } else {
-    a.distance = 9999;
+  if(isNaN(lat) || isNaN(lng)){
+    return;
   }
+
+  let color = "#c0392b";
+
+  if (a.Riesgo && a.Riesgo.toLowerCase().includes("medio")) color = "#f1c40f";
+  if (a.Riesgo && a.Riesgo.toLowerCase().includes("bajo")) color = "#bdc3c7";
+
+  const icon = L.divIcon({
+    html: `<div style="background:${color};width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>`,
+    iconSize:[13,13],
+    iconAnchor:[6,6],
+    className:''
+  });
+
+  L.marker([lat,lng],{icon})
+    .addTo(markersLayer)
+    .bindPopup(`🌲 <b>${a.Ubicacion}</b><br>${a.Riesgo}`);
 });
 
 data.sort((a, b) => a.distance - b.distance);
@@ -591,7 +605,12 @@ if(file){
     if(!res.ok){console.error("Error guardando:",res.status);alert("Error al guardar");return;}
     L.marker([selectedLat,selectedLng],{icon:window.rIcon}).addTo(markersLayer).bindPopup(`🌲 <b>${ubicacion}</b><br>${riesgo}`);
     closeModal();
-    loadAvistamientos();
+
+    // 🔥 usar esta ubicación como referencia
+userLat = selectedLat;
+userLng = selectedLng;
+
+loadAvistamientos();
     const t=document.getElementById('toast');
     t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'),3000);
