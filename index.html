@@ -377,7 +377,9 @@ function initMap(){
   if(document.getElementById('map').classList.contains('fullscreen')){
     return;
   }
-
+if(!reportMode){
+  return;
+}
   selectedLat = e.latlng.lat;
   selectedLng = e.latlng.lng;
 
