@@ -208,7 +208,7 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
 
   <div id="mapa" class="section">
     <div id="map" style="position:relative;">
-  <button id="exitFullBtn" onclick="toggleMapFull()" 
+  <button id="exitFullBtn" onclick="toggleMapFull(event)">
   style="
     display:none;
     position:absolute;
@@ -584,7 +584,24 @@ if(file){
     setTimeout(()=>t.classList.remove('show'),3000);
   }catch(err){alert("Error al guardar el avistamiento");console.error(err);}
 }
-  function toggleMapFull(){
+  function toggleMapFull(e){
+  if(e) e.stopPropagation(); // 🔥 esto es la clave
+
+  const mapDiv = document.getElementById('map');
+  const exitBtn = document.getElementById('exitFullBtn');
+
+  const isFull = mapDiv.classList.toggle('fullscreen');
+
+  if(isFull){
+    exitBtn.style.display = 'block';
+  } else {
+    exitBtn.style.display = 'none';
+  }
+
+  setTimeout(() => {
+    window.map.invalidateSize();
+  }, 200);
+}
   const mapDiv = document.getElementById('map');
   const exitBtn = document.getElementById('exitFullBtn');
 
