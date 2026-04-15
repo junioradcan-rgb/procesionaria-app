@@ -208,24 +208,22 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
 
   <div id="mapa" class="section">
     <div id="map" style="position:relative;">
-  <button id="exitFullBtn" onclick="toggleMapFull(event)">
-  style="
-    display:none;
-    position:absolute;
-    top:10px;
-    right:10px;
-    z-index:9999;
-    pointer-events:auto;
-    background:#c0392b;
-    color:#fff;
-    border:none;
-    padding:6px 10px;
-    border-radius:6px;
-    font-size:12px;
-    cursor:pointer;
-  ">
-    ❌ Salir
-  </button>
+  <button id="exitFullBtn" onclick="toggleMapFull(event)" style="
+  display:none;
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:9999;
+  background:#c0392b;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:12px;
+  cursor:pointer;
+">
+❌ Salir
+</button>
 </div>
     <button onclick="toggleMapFull()" style="width:100%;padding:10px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:8px;margin-bottom:10px;">
 🖥️ Pantalla completa
@@ -374,6 +372,11 @@ function initMap(){
   window.rIcon=L.divIcon({html:'<div style="background:#c0392b;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>',iconSize:[13,13],iconAnchor:[6,6],className:''});
   const bIcon=L.divIcon({html:'<div style="background:#2980b9;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.6)"></div>',iconSize:[13,13],iconAnchor:[6,6],className:''});
   window.map.on('click',function(e){
+
+  if(document.getElementById('map').classList.contains('fullscreen')){
+    return;
+  }
+
   selectedLat = e.latlng.lat;
   selectedLng = e.latlng.lng;
 
@@ -384,10 +387,8 @@ function initMap(){
     .bindPopup("📍 Ubicación seleccionada")
     .openPopup();
 
-  // 👉 abrir modal automáticamente
   openModal();
 
-  // 👉 rellenar ubicación automática
   setTimeout(() => {
     fetch(`https://nominatim.openstreetmap.org/reverse?lat=${selectedLat}&lon=${selectedLng}&format=json`)
       .then(res => res.json())
@@ -396,10 +397,6 @@ function initMap(){
 
         document.querySelector('#modal input').value =
           lugar + " (" + selectedLat.toFixed(5) + ", " + selectedLng.toFixed(5) + ")";
-      })
-      .catch(() => {
-        document.querySelector('#modal input').value =
-          "Ubicación seleccionada (" + selectedLat.toFixed(5) + ", " + selectedLng.toFixed(5) + ")";
       });
   }, 100);
 });
