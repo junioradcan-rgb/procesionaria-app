@@ -667,7 +667,8 @@ function closeBanner(){
     alert("Tu dispositivo no soporta geolocalización");
     return;
   }
-   navigator.geolocation.getCurrentPosition(
+
+  navigator.geolocation.getCurrentPosition(
     (position) => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
@@ -683,29 +684,21 @@ function closeBanner(){
       .addTo(window.map)
       .bindPopup("📍 Estás aquí")
       .openPopup();
+
       selectedLat = lat;
       selectedLng = lng;
       userLat = lat;
       userLng = lng;
+
       loadAvistamientos();
-
-setTimeout(() => {
-   fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-  .then(res => res.json())
-  .then(data => {
-    let lugar = data.address.city || data.address.town || data.address.village || "Zona desconocida";
-
-    document.querySelector('#modal input').value =
-      lugar + " (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
-  })
-  .catch(() => {
-    document.querySelector('#modal input').value =
-      "Ubicación automática (" + lat.toFixed(5) + ", " + lng.toFixed(5) + ")";
-  });
-}, 100);
     },
     () => {
       alert("No se pudo obtener tu ubicación");
+    },
+    {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 60000
     }
   );
 }
