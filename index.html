@@ -934,6 +934,29 @@ async function loadAvistamientos(){
     }
 
     let data = await res.json();
+    // limpiar avisos antiguos sin confirmación reciente
+data = data.filter(a => {
+
+  if(!a.created_at) return true;
+
+  const created = new Date(a.created_at).getTime();
+  const now = Date.now();
+  const daysOld = (now - created) / 86400000;
+
+  // si tiene menos de 7 días, mostrar
+  if(daysOld <= 7) return true;
+
+  // si fue confirmado recientemente, mostrar
+  if(a.last_confirmed_at){
+    const lastConf = new Date(a.last_confirmed_at).getTime();
+    const confDays = (now - lastConf) / 86400000;
+
+    if(confDays <= 7) return true;
+  }
+
+  // si es viejo y sin confirmación reciente, ocultar
+  return false;
+});
 
     // Calcular distancia si tenemos ubicación del usuario
     if(userLat && userLng){
