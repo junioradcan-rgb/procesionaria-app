@@ -824,6 +824,8 @@ function initMap(){
 
     selectedLat = e.latlng.lat;
     selectedLng = e.latlng.lng;
+    
+    checkHotZone();
 
     if(tempMarker) window.map.removeLayer(tempMarker);
     tempMarker = L.marker([selectedLat,selectedLng],{icon:window.rIcon})
