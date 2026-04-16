@@ -1140,6 +1140,10 @@ async function compressImage(file, maxWidth=1200, quality=0.75){
 // ============================================
 async function submitReport(){
   const btn = document.getElementById('btn-submit');
+   
+  if(isSubmitting) return;
+  isSubmitting = true;
+ 
   const ubicacion = document.getElementById('inp-ubicacion').value.trim();
   const riesgo = document.getElementById('inp-riesgo').value;
   const descripcion = document.getElementById('inp-descripcion').value.trim();
@@ -1148,13 +1152,16 @@ async function submitReport(){
 
   // VALIDACIONES
   if(!selectedLat || !selectedLng){
-    showToast('Toca el mapa para marcar la ubicación exacta', 'error');
-    return;
-  }
-  if(!ubicacion){
-    showToast('Escribe la ubicación', 'error');
-    return;
-  }
+  showToast('Toca el mapa para marcar la ubicación exacta', 'error');
+  isSubmitting = false;
+  return;
+}
+
+if(!ubicacion){
+  showToast('Escribe la ubicación', 'error');
+  isSubmitting = false;
+  return;
+}
 
   // ANTI-SPAM: comprobar reportes de la última hora
   try{
