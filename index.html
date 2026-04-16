@@ -965,9 +965,9 @@ async function loadAvistamientos(){
         .addTo(markersLayer)
         .bindPopup(`
           <div style="font-size:13px">
-            🌲 <b>${a.ubicacion||'Sin ubicación'}</b><br>
+            🌲 <b>${escapeHtml(a.ubicacion || 'Sin ubicación')}</b><br>
             <span style="color:#666;font-size:11px">${timeAgo(a.created_at)}</span><br>
-            ${a.riesgo||''}
+            ${escapeHtml(a.riesgo || '')}
           </div>
         `);
     });
@@ -993,9 +993,9 @@ async function loadAvistamientos(){
         <div class="avist-item ${historico?'historico':''}">
           <div class="avist-icon">🌲</div>
           <div class="avist-info">
-            <h4>${a.ubicacion || 'Ubicación desconocida'}</h4>
+            <h4>${escapeHtml(a.ubicacion || 'Ubicación desconocida')}</h4>
             ${a.foto ? `<img src="${a.foto}" alt="Avistamiento" onclick="openImage('${a.foto}')" class="avist-img">` : ''}
-            <p>${a.descripcion || 'Sin descripción'}</p>
+            <p>${escapeHtml(a.descripcion || 'Sin descripción')}</p>
             <div class="avist-meta">
               <span>🕒 ${tiempoTexto}</span>
               ${a.distance ? `<span class="dot-sep">·</span><span>📍 A ${a.distance.toFixed(1)} km</span>` : ''}
