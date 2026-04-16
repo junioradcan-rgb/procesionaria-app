@@ -1242,9 +1242,10 @@ showToast('✅ Avistamiento reportado. ¡Gracias!', 'success');
     console.error(err);
     showToast('Error al guardar el avistamiento', 'error');
   } finally {
-    btn.disabled = false;
-    btn.innerHTML = 'Enviar alerta';
-  }
+  isSubmitting = false;
+  btn.disabled = false;
+  btn.innerHTML = 'Enviar alerta';
+}
 }
 
 // ============================================
