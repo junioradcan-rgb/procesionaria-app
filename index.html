@@ -274,11 +274,13 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
     <button class="btn-secondary" onclick="goToUserLocation()">📍 Usar mi ubicación</button>
 
     <div class="leyenda">
-      <div class="leyenda-item"><div class="dot" style="background:#c0392b"></div>Alto riesgo</div>
-      <div class="leyenda-item"><div class="dot" style="background:#f1c40f"></div>Riesgo medio</div>
-      <div class="leyenda-item"><div class="dot" style="background:#bdc3c7"></div>Riesgo bajo</div>
-      <div class="leyenda-item"><div class="dot" style="background:#2980b9"></div>Veterinaria</div>
-    </div>
+  <div class="leyenda-item"><div class="dot" style="background:#c0392b"></div>Confirmado reciente</div>
+  <div class="leyenda-item"><div class="dot" style="background:#e67e22"></div>Reporte nuevo</div>
+  <div class="leyenda-item"><div class="dot" style="background:#f1c40f"></div>Antiguo relevante</div>
+  <div class="leyenda-item"><div class="dot" style="background:#27ae60"></div>Ya no está</div>
+  <div class="leyenda-item"><div class="dot" style="background:#7f8c8d"></div>Histórico</div>
+  <div class="leyenda-item"><div class="dot" style="background:#2980b9"></div>Veterinaria</div>
+</div>
 
     <div class="avist-list">
       <h3>Avistamientos recientes</h3>
@@ -918,6 +920,45 @@ function escapeHtml(text){
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 }
+  function checkHotZone(){
+
+  const box = document.getElementById('hotZoneBox');
+  const text = document.getElementById('hotZoneText');
+
+  if(!box || !text) return;
+
+  if(!userLat || !userLng){
+    box.style.display = 'none';
+    return;
+  }
+
+  const items = document.querySelectorAll('.avist-item');
+
+  if(items.length === 0){
+    box.style.display = 'none';
+    return;
+  }
+
+  let total = items.length;
+
+  if(total >= 3){
+    box.style.display = 'block';
+    box.style.borderColor = '#c0392b';
+    text.textContent = '🚨 Zona caliente: varios reportes cerca';
+    return;
+  }
+
+  if(total >= 1){
+    box.style.display = 'block';
+    box.style.borderColor = '#e67e22';
+    text.textContent = '⚠️ Precaución: hay reportes cercanos';
+    return;
+  }
+
+  box.style.display = 'block';
+  box.style.borderColor = '#27ae60';
+  text.textContent = '✅ Sin actividad cercana';
+}
 
 // Helper: calcular distancia entre dos coords (km)
 function getDistance(lat1, lng1, lat2, lng2){
@@ -1075,7 +1116,7 @@ data = data.filter(a => {
         </div>
       `;
     }).join('');
-
+checkHotZone();
   } catch(err){
     console.error("Error:", err);
     document.getElementById('avist-container').innerHTML =
