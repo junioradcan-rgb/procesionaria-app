@@ -865,12 +865,32 @@ function createRiskIcon(color, faded=false){
 }
 
 // Helper: obtener color según riesgo
-function colorForRisk(riesgo){
-  if(!riesgo) return '#c0392b';
-  const r = riesgo.toLowerCase();
-  if(r.includes('medio')) return '#f1c40f';
-  if(r.includes('bajo')) return '#bdc3c7';
-  return '#c0392b';
+function colorForRisk(avistamiento){
+
+  const now = Date.now();
+
+  // confirmado recientemente = verde
+  if(avistamiento.last_confirmed_at){
+    const confTime = new Date(avistamiento.last_confirmed_at).getTime();
+    const confHours = (now - confTime) / 3600000;
+
+    if(confHours <= 48){
+      return '#27ae60';
+    }
+  }
+
+  // creado recientemente = rojo
+  if(avistamiento.created_at){
+    const created = new Date(avistamiento.created_at).getTime();
+    const ageHours = (now - created) / 3600000;
+
+    if(ageHours <= 48){
+      return '#c0392b';
+    }
+  }
+
+  // antiguo visible = amarillo
+  return '#f1c40f';
 }
 function escapeHtml(text){
   if(text === null || text === undefined) return '';
@@ -980,7 +1000,7 @@ data = data.filter(a => {
       const lng = parseFloat(a.lng);
       if(isNaN(lat) || isNaN(lng)) return;
 
-      const color = colorForRisk(a.riesgo);
+      const color = colorForRisk(a);
       const historico = isHistorico(a.created_at);
       const icon = createRiskIcon(color, historico);
 
