@@ -763,11 +763,22 @@ renderVets(vets);
 // NAVEGACIÓN ENTRE TABS
 // ============================================
 function showTab(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
-  if(id==='mapa') setTimeout(initMap,100);
+
+  if(id === 'mapa'){
+    setTimeout(() => {
+      initMap();
+
+      if(window.map){
+        window.map.invalidateSize();
+      }
+
+    }, 100);
+  }
 }
 
 // ============================================
