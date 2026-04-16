@@ -1309,8 +1309,14 @@ function openImage(src){
   document.getElementById('imgModalContent').src = src;
   document.getElementById('imgModal').style.display = 'flex';
 }
-document.getElementById('imgModal').addEventListener('click', ()=>{
-  document.getElementById('imgModal').style.display = 'none';
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('imgModal');
+
+  if(!modal) return;
+
+  modal.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
 });
 
 // ============================================
