@@ -1071,6 +1071,12 @@ async function confirmSighting(id, isConfirm){
 // ACTIVAR MODO REPORTE
 // ============================================
 function activateReportMode(){
+
+  if(!window.map){
+    showToast('Abre primero el mapa', 'error');
+    return;
+  }
+
   reportMode = true;
 
   selectedLat = null;
