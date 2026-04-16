@@ -1265,15 +1265,19 @@ function goToUserLocation(){
 
       window.map.setView([lat, lng], 15);
 
-      L.marker([lat, lng], {
-        icon: L.divIcon({
-          html:'<div style="background:#3498db;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.6)"></div>',
-          className:''
-        })
-      })
-      .addTo(window.map)
-      .bindPopup("📍 Estás aquí")
-      .openPopup();
+      if(userMarker){
+  window.map.removeLayer(userMarker);
+}
+
+userMarker = L.marker([lat, lng], {
+  icon: L.divIcon({
+    html:'<div style="background:#3498db;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.6)"></div>',
+    className:''
+  })
+})
+.addTo(window.map)
+.bindPopup("📍 Estás aquí")
+.openPopup();
 
       selectedLat = lat;
       selectedLng = lng;
@@ -1304,14 +1308,23 @@ function goToUserLocation(){
 // PANTALLA COMPLETA DEL MAPA
 // ============================================
 function toggleMapFull(e){
-  if(e){ e.stopPropagation(); e.preventDefault(); }
+  if(e){
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
   const mapDiv = document.getElementById('map');
   const exitBtn = document.getElementById('exitFullBtn');
+
   const isFull = mapDiv.classList.toggle('fullscreen');
+
   exitBtn.style.display = isFull ? 'block' : 'none';
-  if(!isFull){
-}
-  setTimeout(()=>window.map.invalidateSize(), 200);
+
+  setTimeout(() => {
+    if(window.map){
+      window.map.invalidateSize();
+    }
+  }, 200);
 }
 
 // ============================================
