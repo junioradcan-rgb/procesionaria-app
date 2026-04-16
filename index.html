@@ -711,11 +711,16 @@ async function confirmSighting(id, isConfirm){
 // ACTIVAR MODO REPORTE
 // ============================================
 function activateReportMode(){
-  if(selectedLat && selectedLng){
-    openModal();
-    return;
-  }
   reportMode = true;
+
+  selectedLat = null;
+  selectedLng = null;
+
+  if(tempMarker){
+    window.map.removeLayer(tempMarker);
+    tempMarker = null;
+  }
+
   showToast('Toca el mapa para marcar la ubicación', 'success');
 }
 
