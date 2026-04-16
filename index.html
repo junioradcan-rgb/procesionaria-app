@@ -1395,6 +1395,7 @@ userMarker = L.marker([lat, lng], {
       userLat = lat;
       userLng = lng;
       loadAvistamientos();
+      checkHotZone();
 
       setTimeout(()=>{
         fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
