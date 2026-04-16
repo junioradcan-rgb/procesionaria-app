@@ -332,7 +332,10 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
     <div class="form-group"><label>Ubicación</label><input type="text" id="inp-ubicacion" placeholder="Ej: Pinar de Gènova, junto al camino principal"></div>
     <div class="form-group"><label>Nivel de riesgo</label><select id="inp-riesgo"><option value="Alto">⚠️ Alto — Procesión activa en el suelo</option><option value="Medio">⚡ Medio — Bolsas visibles en los pinos</option><option value="Bajo">🔍 Bajo — Indicios o rastros secos</option></select></div>
     <div class="form-group"><label>Descripción</label><textarea id="inp-descripcion" placeholder="¿Qué viste? ¿Es un camino frecuentado por perros?"></textarea></div>
-    <div class="form-group"><label>Foto (opcional)</label><input type="file" id="foto" accept="image/*" capture="environment"><p style="font-size:11px;color:#666;margin-top:5px">Las fotos se comprimen automáticamente</p></div>
+    <div class="form-group"><label>Foto (opcional)</label><input type="file" id="foto" accept="image/*,.jpg,.jpeg,.png" onchange="previewPhoto(event)">
+<div id="previewWrap" style="display:none;margin-top:10px">
+<img id="previewImg" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;border:1px solid #333">
+</div><p style="font-size:11px;color:#666;margin-top:5px">
     <div class="modal-actions"><button class="btn-cancel" onclick="closeModal()">Cancelar</button><button class="btn-submit" id="btn-submit" onclick="submitReport()">Enviar alerta</button></div>
   </div>
 </div>
@@ -348,7 +351,26 @@ const HEADERS={"apikey":SUPA_KEY,"Authorization":"Bearer "+SUPA_KEY,"Content-Typ
 const WA="34622922173";
 const WA_MSG={educacion:"Hola Carlos, te escribo desde la app de Perros de la Isla. Me interesa el servicio de Educación canina básica y avanzada.",reactividad:"Hola Carlos, te escribo desde la app de Perros de la Isla. Me interesa el servicio de Control de reactividad e impulsividad.",cachorros:"Hola Carlos, te escribo desde la app de Perros de la Isla. Me interesa el programa de Educación temprana para cachorros.",general:"Hola Carlos, te escribo desde la app de Perros de la Isla. Me gustaría consultarte sobre tus servicios de adiestramiento."};
 function openWhatsApp(s){window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(WA_MSG[s]||WA_MSG.general),"_blank");return false;}
+function previewPhoto(event){
+  const file = event.target.files[0];
+  const wrap = document.getElementById('previewWrap');
+  const img = document.getElementById('previewImg');
 
+  if(!file){
+    wrap.style.display='none';
+    img.src='';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    img.src = e.target.result;
+    wrap.style.display='block';
+  };
+
+  reader.readAsDataURL(file);
+}
 // ============================================
 // INSIGNIAS
 // ============================================
@@ -549,7 +571,7 @@ async function confirmSighting(id,isConfirm){
 
 function activateReportMode(){if(!window.map){showToast('Abre primero el mapa','error');return;}if(!getProfile()){document.getElementById('onboarding').classList.remove('hidden');return;}reportMode=true;selectedLat=null;selectedLng=null;if(tempMarker){window.map.removeLayer(tempMarker);tempMarker=null;}showToast('Toca el mapa para marcar la ubicación','success');}
 function openModal(){if(!selectedLat||!selectedLng){showToast('Primero toca el mapa o usa tu ubicación','error');return;}document.getElementById('modal').classList.add('open');}
-function closeModal(){document.getElementById('modal').classList.remove('open');if(tempMarker){window.map.removeLayer(tempMarker);tempMarker=null;}selectedLat=null;selectedLng=null;reportMode=false;document.getElementById('inp-ubicacion').value='';document.getElementById('inp-descripcion').value='';document.getElementById('foto').value='';}
+function closeModal(){document.getElementById('modal').classList.remove('open');if(tempMarker){window.map.removeLayer(tempMarker);tempMarker=null;}selectedLat=null;selectedLng=null;reportMode=false;document.getElementById('inp-ubicacion').value='';document.getElementById('inp-descripcion').value='';document.getElementById('foto').value='';document.getElementById('previewWrap').style.display='none';document.getElementById('previewImg').src='';}
 
 async function compressImage(file,maxW,q){maxW=maxW||1200;q=q||0.75;return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=(maxW/w)*h;w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);c.toBlob(b=>res(b),'image/jpeg',q);};img.onerror=rej;img.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
 
