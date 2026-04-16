@@ -1,7 +1,7 @@
 {
   "name": "Procesionaria Mallorca",
   "short_name": "Procesionaria",
-  "start_url": "/",
+  "start_url": "/procesionaria-app/",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#c0392b",
