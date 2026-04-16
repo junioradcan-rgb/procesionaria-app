@@ -332,10 +332,7 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
     <div class="form-group"><label>Ubicación</label><input type="text" id="inp-ubicacion" placeholder="Ej: Pinar de Gènova, junto al camino principal"></div>
     <div class="form-group"><label>Nivel de riesgo</label><select id="inp-riesgo"><option value="Alto">⚠️ Alto — Procesión activa en el suelo</option><option value="Medio">⚡ Medio — Bolsas visibles en los pinos</option><option value="Bajo">🔍 Bajo — Indicios o rastros secos</option></select></div>
     <div class="form-group"><label>Descripción</label><textarea id="inp-descripcion" placeholder="¿Qué viste? ¿Es un camino frecuentado por perros?"></textarea></div>
-    <div class="form-group"><label>Foto (opcional)</label><input type="file" id="foto" accept="image/*" style="display:none"><div style="display:flex;gap:8px;margin-top:8px"><button type="button" onclick="abrirCamara()" style="flex:1;padding:10px;background:#c0392b;color:#fff;border:none;border-radius:8px">📷 Cámara</button><button type="button" onclick="abrirGaleria()" style="flex:1;padding:10px;background:#222;color:#fff;border:1px solid #444;border-radius:8px">🖼️ Galería</button></div><p style="font-size:11px;color:#666;margin-top:5px">Las fotos se comprimen automáticamente</p></div>
-<div id="previewWrap" style="display:none;margin-top:10px">
-<img id="previewImg" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;border:1px solid #333">
-</div><p style="font-size:11px;color:#666;margin-top:5px">
+    <div class="form-group"><label>Foto (opcional)</label><input type="file" id="foto" accept="image/*" onchange="previewPhoto(event)" style="display:none"><div style="display:flex;gap:8px;margin-top:8px"><button type="button" onclick="abrirCamara()" style="flex:1;padding:10px;background:#c0392b;color:#fff;border:none;border-radius:8px">📷 Cámara</button><button type="button" onclick="abrirGaleria()" style="flex:1;padding:10px;background:#222;color:#fff;border:1px solid #444;border-radius:8px">🖼️ Galería</button></div><p style="font-size:11px;color:#666;margin-top:5px">Las fotos se comprimen automáticamente</p><div id="previewWrap" style="display:none;margin-top:10px"><img id="previewImg" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;border:1px solid #333"></div></div>
     <div class="modal-actions"><button class="btn-cancel" onclick="closeModal()">Cancelar</button><button class="btn-submit" id="btn-submit" onclick="submitReport()">Enviar alerta</button></div>
   </div>
 </div>
@@ -370,6 +367,17 @@ function previewPhoto(event){
   };
 
   reader.readAsDataURL(file);
+}
+  function abrirCamara(){
+  const input=document.getElementById('foto');
+  input.setAttribute('capture','environment');
+  input.click();
+}
+
+function abrirGaleria(){
+  const input=document.getElementById('foto');
+  input.removeAttribute('capture');
+  input.click();
 }
 // ============================================
 // INSIGNIAS
