@@ -304,29 +304,345 @@ header{background:#111;padding:14px 16px 12px;display:flex;align-items:center;ga
   <!-- SECCIÓN ADIESTRAMIENTO -->
 <div id="adiestramiento" class="section">
 
-  <div class="info-card">
-    <h3>Carlos Acevedo</h3>
-    <p>Instructor Canino Profesional en Palma de Mallorca.</p>
-    <p>Educación canina respetuosa, modificación de conducta y ayuda real para convivir mejor con tu perro.</p>
+  <style>
+    #adiestramiento{
+      background:#050505;
+    }
+
+    .adi-wrap{
+      max-width:460px;
+      margin:0 auto;
+    }
+
+    .adi-hero{
+      background:linear-gradient(180deg,#5c0909 0%, #0b0b0b 100%);
+      border:1px solid #2a2a2a;
+      border-radius:14px;
+      overflow:hidden;
+      margin-bottom:16px;
+    }
+
+    .adi-hero img{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .adi-hero-content{
+      padding:16px;
+    }
+
+    .adi-name{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:34px;
+      letter-spacing:1px;
+      color:#fff;
+      margin-bottom:4px;
+    }
+
+    .adi-sub{
+      color:#ff5a47;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .adi-text{
+      color:#ddd;
+      font-size:15px;
+      line-height:1.7;
+      margin-bottom:12px;
+    }
+
+    .adi-note{
+      background:#10140c;
+      border:1px solid #33441c;
+      color:#b8d66b;
+      padding:12px;
+      border-radius:10px;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .adi-title{
+      font-family:'Bebas Neue',sans-serif;
+      color:#9cb64b;
+      font-size:28px;
+      letter-spacing:1px;
+      margin:20px 0 10px;
+    }
+
+    .srv-card{
+      background:#111;
+      border:1px solid #2b2b2b;
+      border-left:4px solid #9cb64b;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+
+    .srv-name{
+      font-family:'Bebas Neue',sans-serif;
+      color:#fff;
+      font-size:22px;
+      margin-bottom:8px;
+    }
+
+    .srv-text{
+      color:#cfcfcf;
+      font-size:15px;
+      line-height:1.6;
+      margin-bottom:14px;
+    }
+
+    .wa-btn{
+      display:block;
+      width:100%;
+      text-align:center;
+      background:#25D366;
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding:14px;
+      border-radius:10px;
+      font-size:16px;
+    }
+
+    .group-card{
+      background:linear-gradient(135deg,#10200d,#161616);
+      border:1px solid #35572c;
+      border-radius:12px;
+      padding:16px;
+      margin-top:6px;
+      margin-bottom:14px;
+    }
+
+    .badge-season{
+      display:inline-block;
+      background:#8aa14c;
+      color:#111;
+      font-size:11px;
+      font-weight:700;
+      padding:5px 10px;
+      border-radius:20px;
+      margin-bottom:10px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .ig-btn{
+      display:block;
+      width:100%;
+      text-align:center;
+      background:linear-gradient(90deg,#833ab4,#fd1d1d,#fcb045);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding:14px;
+      border-radius:10px;
+      margin-top:12px;
+    }
+
+    .ig-card{
+      background:#141414;
+      border:1px solid #2a2a2a;
+      border-radius:12px;
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .ig-logo{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+    }
+
+    .ig-user{
+      color:#fff;
+      font-weight:700;
+      font-size:16px;
+    }
+
+    .ig-sub{
+      color:#8b8b8b;
+      font-size:13px;
+      margin-top:2px;
+    }
+
+    .contact-card{
+      background:#141414;
+      border:1px solid #2a2a2a;
+      border-radius:12px;
+      padding:16px;
+      margin-top:8px;
+    }
+
+    .contact-row{
+      padding:10px 0;
+      border-bottom:1px solid #222;
+    }
+
+    .contact-row:last-child{
+      border-bottom:none;
+    }
+
+    .contact-label{
+      color:#fff;
+      font-weight:700;
+      font-size:18px;
+      margin-bottom:4px;
+    }
+
+    .contact-value{
+      color:#8e8e8e;
+      font-size:14px;
+    }
+
+    .hours{
+      background:#090909;
+      border-radius:10px;
+      padding:14px;
+      margin-top:14px;
+      color:#bfbfbf;
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .final-msg{
+      text-align:center;
+      margin:28px 0 12px;
+      font-family:'Bebas Neue',sans-serif;
+      color:#ff4c3a;
+      font-size:38px;
+      line-height:1.1;
+      letter-spacing:1px;
+    }
+
+    .final-sub{
+      text-align:center;
+      color:#666;
+      font-size:13px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      margin-bottom:20px;
+    }
+  </style>
+
+  <div class="adi-wrap">
+
+    <div class="adi-hero">
+      <img src="https://perrosdelaisla.com/wp-content/uploads/2024/01/carlos-acevedo.jpg">
+      <div class="adi-hero-content">
+        <div class="adi-name">Carlos Acevedo</div>
+        <div class="adi-sub">Instructor Canino · Palma de Mallorca</div>
+
+        <div class="adi-text">
+          Hola, soy <strong>Carlos Acevedo</strong>. Llevo más de 14 años trabajando como adiestrador y ayudando a familias a convivir mejor con sus perros.
+        </div>
+
+        <div class="adi-text">
+          Trabajo con métodos respetuosos, claros y eficaces para resolver problemas reales y crear una relación sana con tu perro.
+        </div>
+
+        <div class="adi-note">
+          💡 Si has visto una procesionaria, repórtala en la pestaña Mapa. Esta zona es solo para consultas de adiestramiento.
+        </div>
+      </div>
+    </div>
+
+    <div class="adi-title">Servicios Destacados</div>
+
+    <div class="srv-card">
+      <div class="srv-name">Educación Canina Básica y Avanzada</div>
+      <div class="srv-text">
+        Obediencia, modales en casa, paseo correcto, llamada y convivencia diaria.
+      </div>
+      <a class="wa-btn" href="https://wa.me/34622922173" target="_blank">💬 Consultar por WhatsApp</a>
+    </div>
+
+    <div class="srv-card">
+      <div class="srv-name">Control de Reactividad e Impulsividad</div>
+      <div class="srv-text">
+        Para perros que reaccionan ante otros perros, personas o estímulos del entorno.
+      </div>
+      <a class="wa-btn" href="https://wa.me/34622922173" target="_blank">💬 Consultar por WhatsApp</a>
+    </div>
+
+    <div class="srv-card">
+      <div class="srv-name">Educación Temprana para Cachorros</div>
+      <div class="srv-text">
+        Socialización, higiene, autocontrol y bases sólidas desde el principio.
+      </div>
+      <a class="wa-btn" href="https://wa.me/34622922173" target="_blank">💬 Consultar por WhatsApp</a>
+    </div>
+
+    <div class="adi-title">Actividades en Grupo</div>
+
+    <div class="group-card">
+      <div class="badge-season">Actividad Estacional</div>
+      <div class="srv-name">Expediciones Caninas</div>
+      <div class="srv-text">
+        Paseos grupales educativos y socialización en naturaleza. Fechas anunciadas en Instagram.
+      </div>
+      <a class="ig-btn" href="https://instagram.com/perrosdelaisla" target="_blank">📣 Ver anuncios en Instagram</a>
+    </div>
+
+    <div class="ig-card">
+      <div class="ig-logo">📷</div>
+      <div>
+        <div class="ig-user">@perrosdelaisla</div>
+        <div class="ig-sub">Sígueme para novedades, consejos y actividades</div>
+      </div>
+    </div>
+
+    <div class="adi-title">Contacto</div>
+
+    <div class="contact-card">
+
+      <div class="contact-row">
+        <div class="contact-label">💬 WhatsApp · 622 922 173</div>
+        <div class="contact-value">Consultas de adiestramiento</div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-label">✉️ Email</div>
+        <div class="contact-value">perrosdelaislapalma@gmail.com</div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-label">🌐 Web oficial</div>
+        <div class="contact-value">perrosdelaisla.com</div>
+      </div>
+
+      <div class="hours">
+        <strong>Horario</strong><br>
+        Lunes a Viernes · 10:00 a 13:00 · 17:00 a 20:00<br>
+        Sábados · 10:00 a 13:00 · Domingos cerrado
+      </div>
+
+    </div>
+
+    <div class="final-msg">
+      TU PERRO MERECE<br>SER FELIZ, HOY.
+    </div>
+
+    <div class="final-sub">
+      Perros de la Isla · Palma de Mallorca
+    </div>
+
   </div>
 
-  <div class="info-card">
-    <h3>Servicios</h3>
-    <p>🐾 Cachorros</p>
-    <p>🐾 Reactividad</p>
-    <p>🐾 Llamada y obediencia</p>
-    <p>🐾 Ansiedad por separación</p>
-    <p>🐾 Consultas personalizadas</p>
-  </div>
-
-  <div class="info-card">
-    <h3>Contacto</h3>
-    <p><a href="https://wa.me/34622922173" target="_blank" style="color:#27ae60;">WhatsApp directo</a></p>
-    <p><a href="https://perrosdelaisla.com" target="_blank" style="color:#3498db;">Web oficial</a></p>
-    <p><a href="https://instagram.com/perrosdelaisla" target="_blank" style="color:#c0392b;">Instagram</a></p>
-  </div>
-
-</div>
 </div>
 
 <!-- MODAL DE REPORTE -->
