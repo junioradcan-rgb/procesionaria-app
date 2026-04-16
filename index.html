@@ -1181,17 +1181,55 @@ if(!ubicacion){
 
   // ANTI-SPAM: comprobar reportes de la última hora
   try{
-    const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
-    const checkRes = await fetch(
-      SUPA_URL + `/rest/v1/avistamientos?reporter_id=eq.${USER_ID}&created_at=gte.${oneHourAgo}&select=id`,
-      {headers: HEADERS}
+
+  // límite de reportes por hora
+  const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
+
+  const checkRes = await fetch(
+    SUPA_URL + `/rest/v1/avistamientos?reporter_id=eq.${USER_ID}&created_at=gte.${oneHourAgo}&select=id`,
+    {headers: HEADERS}
+  );
+
+  const recent = await checkRes.json();
+
+  if(recent.length >= 5){
+    showToast('Has reportado mucho en la última hora. Espera un poco.', 'error');
+    isSubmitting = false;
+    return;
+  }
+
+
+  // detectar duplicado cercano (6 horas)
+  const sixHoursAgo = new Date(Date.now() - 21600000).toISOString();
+
+  const nearRes = await fetch(
+    SUPA_URL + `/rest/v1/avistamientos?created_at=gte.${sixHoursAgo}&select=lat,lng`,
+    {headers: HEADERS}
+  );
+
+  const nearby = await nearRes.json();
+
+  for(const r of nearby){
+
+    if(!r.lat || !r.lng) continue;
+
+    const dist = getDistance(
+      selectedLat,
+      selectedLng,
+      parseFloat(r.lat),
+      parseFloat(r.lng)
     );
-    const recent = await checkRes.json();
-    if(recent.length >= 5){
-      showToast('Has reportado mucho en la última hora. Espera un poco.', 'error');
+
+    if(dist <= 0.08){
+      showToast('Ya existe un reporte reciente muy cerca de ahí.', 'error');
+      isSubmitting = false;
       return;
     }
-  } catch(e){ /* no bloquear por error de anti-spam */ }
+  }
+
+}catch(e){
+  console.error(e);
+}
 
   // LOADING
   btn.disabled = true;
