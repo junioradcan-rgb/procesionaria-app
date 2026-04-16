@@ -861,11 +861,11 @@ async function submitReport(){
     }
 
     // ÉXITO
-    closeModal();
     userLat = selectedLat;
-    userLng = selectedLng;
-    await loadAvistamientos();
-    showToast('✅ Avistamiento reportado. ¡Gracias!', 'success');
+userLng = selectedLng;
+closeModal();
+await loadAvistamientos();
+showToast('✅ Avistamiento reportado. ¡Gracias!', 'success');
 
   } catch(err){
     console.error(err);
@@ -947,13 +947,7 @@ function toggleMapFull(e){
   const isFull = mapDiv.classList.toggle('fullscreen');
   exitBtn.style.display = isFull ? 'block' : 'none';
   if(!isFull){
-    selectedLat = null;
-    selectedLng = null;
-    if(tempMarker){
-      window.map.removeLayer(tempMarker);
-      tempMarker = null;
-    }
-  }
+}
   setTimeout(()=>window.map.invalidateSize(), 200);
 }
 
